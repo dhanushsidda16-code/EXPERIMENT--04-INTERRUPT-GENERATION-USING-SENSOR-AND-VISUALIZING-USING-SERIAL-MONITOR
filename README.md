@@ -1,10 +1,10 @@
 # EXPERIMENT-04-INTERRUPT-GENERATION-USING-SENSOR-AND-VISUALIZING-USING-SERIAL-MONITOR
 
-###  DATE: 
+###  DATE: 23-02-2026
 
-###  NAME: 
-###  ROLL NO :
-###  DEPARTMENT: 
+###  NAME: SIDDA DHANUSH
+###  ROLL NO :21224243006
+###  DEPARTMENT: AIML
 ### Aim:
 To Interface a IR Sensor to digital port of iot development board  and generate an interrupt and visualize on the serial monitor 
 
@@ -124,16 +124,113 @@ The diagram below shows how the GPIO pins are connected to the 16 interrupt line
 16. click on the run to observe the values 
  
 
-## STM 32 CUBE PROGRAM :
+## STM 32 CUBE PROGRAM 4A :
+```
+#include "main.h"
+#include "stdio.h"
 
+#if defined(__GNUC__)
+#define PUTCHAR_PROTOTYPE int  __io_putchar(int ch)
+#endif
+
+
+int main(void)
+{
+
+  
+  HAL_Init();
+
+  SystemClock_Config();
+
+ 
+  MX_GPIO_Init();
+  MX_USART2_UART_Init();
+  
+  while (1)
+  {
+  }
+  
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_4)==1)
+	{
+		printf("INTERRUPT GENERATED\n");
+	}
+}
+PUTCHAR_PROTOTYPE
+{
+	HAL_UART_Transmit(&huart2,(uint8_t*)&ch,1,0xFFFF);
+	return ch;
+}
+```
 
 
 ## Output screen shots of serial port utility   :
- 
- 
+ <img width="1920" height="1200" alt="Screenshot (55)" src="https://github.com/user-attachments/assets/b24f9677-1c34-4f7d-a665-0f76c77bac36" />
+
+## STM 32 CUBE PROGRAM 4B :
+```
+#include "main.h"
+#include "main.h"
+#include"stdbool.h"
+#include"stdio.h"
+bool IRSENSOR;
+void IRPAIR();
+
+#if defined(__GNUC__)
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#endif
+
+
+int main(void)
+{
+
+  
+  HAL_Init();
+
+  SystemClock_Config();
+
+  MX_GPIO_Init();
+  MX_USART2_UART_Init();
+  
+  while (1)
+  {
+    
+	  IRPAIR();
+  }
+}
+void IRPAIR()
+{
+IRSENSOR = HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_4);
+if(IRSENSOR==0)
+{
+HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+printf("Obstacle Detected\n");
+HAL_Delay(1000);
+}
+else
+{
+HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+printf("Obstacle Not Detected\n");
+HAL_Delay(1000);
+}
+}
+PUTCHAR_PROTOTYPE
+{
+HAL_UART_Transmit(&huart2,(uint8_t*)&ch,1,0xFFFF);
+return ch;
+}
+```
+## Output screen shots of serial port utility   :
+<img width="1920" height="1200" alt="Screenshot (50)" src="https://github.com/user-attachments/assets/08561de8-2eac-435d-bef6-a3201a99bc5a" />
+
  ## Circuit board :
- 
- 
+ ![WhatsApp Image 2026-03-09 at 7 37 39 PM](https://github.com/user-attachments/assets/591c1eec-7d8d-49e4-b2ae-735187da5a18)
+
+ ![WhatsApp Image 2026-03-09 at 7 37 39 PM (1)](https://github.com/user-attachments/assets/bc7b4a37-d9c8-4e79-b716-9c5dbfb58911)
+
  
 ## Result :
 Interfacing a  IR SENSOR and interrupt is generated using external interrupt mode , visualized on serial port 
